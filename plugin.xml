@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-wechat" version="1.0.0" 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>WeChat</name>
+
+    <preference name="WECHAT_APPID"/>
+
+    <js-module name="WeChat" src="www/wechat.js">
+        <clobbers target="cordova.plugins.WeChat" />
+    </js-module>
+
+    <platform name="android">
+        <hook type="after_plugin_add" src="scripts/android-install.js" />
+        <hook type="after_plugin_install" src="scripts/android-install.js" />
+        <hook type="before_plugin_rm" src="scripts/android-install.js" />
+        <hook type="before_plugin_uninstall" src="scripts/android-install.js" />
+        
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="WeChat">
+                <param name="android-package" value="com.openunion.cordova.plugins.wechat.WeChat" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="WECHAT_APPID" value="$WECHAT_APPID" />
+        </config-file>
+
+        <config-file parent="/*" target="AndroidManifest.xml" >
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/> 
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/> 
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/> 
+            <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.CAMERA" />
+            <uses-permission android:name="com.tencent.mm.permission.MM_MESSAGE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                android:name=".wxapi.WXPayEntryActivity"
+                android:exported="true"
+                android:launchMode="singleTop">
+                <intent-filter>
+                    <action android:name="android.intent.action.VIEW"/>
+                    <category android:name="android.intent.category.DEFAULT"/>
+                    <data android:scheme="$WECHAT_APPID"/>
+                </intent-filter>
+            </activity>
+        </config-file>
+
+        <source-file src="src/android/WeChat.java" target-dir="src/com/openunion/cordova/plugins/wechat" />       
+        <source-file src="libs/android/libammsdk.jar" target-dir="libs" />
+    </platform>
+
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="WeChat">
+                <param name="ios-package" value="WeChat" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="WECHAT_APPID" value="$WECHAT_APPID" />
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>weixin</string>
+                <string>wechat</string>
+            </array>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
+            <array>
+                <dict>
+                    <key>CFBundleURLName</key>
+                    <string>wechatschemes</string>
+                    <key>CFBundleURLSchemes</key>
+                    <array>
+                        <string>$WECHAT_APPID</string>
+                    </array>
+                </dict>
+            </array>
+        </config-file>
+
+        <!-- Plugin source code -->
+        <source-file src="src/ios/WeChat.m" />
+
+        <!-- Wechat Official -->
+        <header-file src="libs/ios/OpenSDK1.7.7/WXApi.h" />
+        <header-file src="libs/ios/OpenSDK1.7.7/WXApiObject.h" />
+        <source-file src="libs/ios/OpenSDK1.7.7/libWeChatSDK.a" framework="true" />
+
+        <!-- Other required frameworks -->
+        <framework src="libz.tbd" />
+        <framework src="libsqlite3.0.tbd" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="Security.framework" />
+        <framework src="CFNetwork.framework" />
+        <framework src="libstdc++.6.tbd" />
+
+    </platform>
+</plugin>
