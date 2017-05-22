@@ -1,4 +1,4 @@
-#银联 cordova 插件
+#微信 cordova 插件
  
 ##插件安装 
 
