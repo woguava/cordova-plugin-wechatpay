@@ -1,0 +1,20 @@
+{
+  "name": "cordova-plugin-wechat",
+  "version": "1.0.0",
+  "description": "微信cordova支付插件",
+  "repo": "https://github.com/woguava/cordova-plugin-wechat",
+  "cordova": {
+    "id": "cordova-plugin-wechat",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "wechat",
+    "payment"
+  ],
+  "author": "openunion.cn",
+  "license": "MIT license"
+}
