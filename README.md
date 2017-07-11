@@ -3,7 +3,7 @@
 ##插件安装 
 
     ## $ cordova plugin add https://github.com/woguava/cordova-plugin-wechat.git --variable WECHAT_APPID=$(uuid) 
-    ## $ ionic plugin add https://github.com/woguava/cordova-plugin-wechat.git --variable WECHAT_APPID=$(uuid)  
+    ## $ ionic cordova plugin add https://github.com/woguava/cordova-plugin-wechat.git --variable WECHAT_APPID=$(uuid)  
 
 ##插件删除
 
